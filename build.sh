@@ -16,4 +16,6 @@ cd ./_build/.cache/
 git checkout $1
 
 docker build -t andreychuk/upload-microservice:$1 ../
+cd ..
+rm -rf ./.cache/
 docker push andreychuk/upload-microservice:$1

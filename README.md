@@ -23,6 +23,20 @@ Getting up and running is as easy as 1, 2, 3.
     npm start
     ```
 
+## Environment Variables
+
+    
+    DEBUG - All in app logs goes to 'app*'.
+    PORT - What port server is listening.
+    
+    NODE_ENV - dev|production
+    
+    AWS_ACCESS_KEY_ID - AWS access key id
+    AWS_SECRET_ACCESS_KEY - AWS secret access key
+    AWS_REGION - AWS region
+    AWS_BUCKET_NAME - AWS bucket name
+    
+
 ## Testing
 
 Simply run `npm test` and all your tests in the `test/` directory will be run.

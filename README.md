@@ -29,7 +29,7 @@ Getting up and running is as easy as 1, 2, 3.
     DEBUG - All in app logs goes to 'app*'.
     PORT - What port server is listening.
     
-    NODE_ENV - dev|production
+    NODE_ENV - production
     
     AWS_ACCESS_KEY_ID - AWS access key id
     AWS_SECRET_ACCESS_KEY - AWS secret access key

@@ -1,5 +1,7 @@
 FROM node:7.7.4-alpine
 
+RUN apk add --update nginx
+
 # Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

@@ -47,7 +47,6 @@ Simply run `npm test` and all your tests in the `test/` directory will be run.
 
 ## TODO
 
-- [ ] add upload to DigitalOcean Storage
 - [ ] add upload to [cloudinary](http://cloudinary.com)
 
 ## License

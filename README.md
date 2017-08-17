@@ -23,11 +23,12 @@ Getting up and running is as easy as 1, 2, 3.
     npm start
     ```
 
+server is listening on port 8080
+
 ## Environment Variables
 
     
     DEBUG - All in app logs goes to 'app*'.
-    PORT - What port server is listening.
     
     NODE_ENV - production
     

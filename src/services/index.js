@@ -17,7 +17,7 @@ module.exports = function() {
 
   app.service('/s3/upload', {create: upload.uploadS3});
 
-  app.service('/s3/remove', {remove: removeFile});
+  app.service('/s3/remove', {remove: removeFile.removeS3});
 
   app.service('/cloudinary/upload', {create: upload.uploadCloudinary});
 

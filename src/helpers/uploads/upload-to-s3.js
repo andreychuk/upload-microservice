@@ -38,4 +38,3 @@ function createUniqueFileName(file) {
   const [fileName, ...extension] = file.name.split(".");
   return [fileName, uuid(), ...extension].join('.');
 }
-

@@ -1,19 +1,27 @@
 const ClodinaryClient = require('cloudinary').v2;
 const _ = require('lodash');
-
-const config = require('smart-config').get('cloudinary');
+const Promise = require('bluebird');
+const httpError = require('http-errors');
 
 module.exports = async ({ input }) => {
-  return uploadMany(ClodinaryClient(), input, config.bucketName);
+  return uploadMany(ClodinaryClient, input);
 };
 
-function upload() {
-  
+function upload(client, file) {
+  return new Promise((resolve, reject) => {
+    client.upload(file, (error, result) => {
+      if (error) return reject(httpError(error.statusCode, error.message));
+      resolve({ key: result.public_id, url: result.url });
+    });
+  });
 }
 
-function uploadMany(client, files, bucket) {
+function uploadMany(client, files) {
   if (!_.isArray(files)) {
     files = [files];
   }
-  return upload(client, files, bucket);
+
+  return Promise.map(files, (file) => {
+    return upload(client, file);
+  });
 }

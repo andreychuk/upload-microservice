@@ -1,7 +1,7 @@
-const upload_s3 = require('./upload-to-s3');
-const upload_cl = require('./upload-to-cloudinary');
+const uploadToS3 = require('./upload-to-s3');
+const uploadToCloudinary = require('./upload-to-cloudinary');
 
 module.exports = {
-  uploadS3: upload_s3,
-  uploadCloudinary: upload_cl
+  uploadS3: uploadToS3,
+  uploadCloudinary: uploadToCloudinary
 };

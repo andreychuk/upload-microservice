@@ -6,7 +6,7 @@ module.exports = {
     return upload.uploadS3(body.files, params);
   },
 
-  uploadCloudinary: (body,params) => {
-    return upload.uploadCloudinary(body.file,params);
+  uploadCloudinary: (body, params) => {
+    return upload.uploadCloudinary(body.file, params);
   }
 };

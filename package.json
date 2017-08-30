@@ -36,6 +36,7 @@
     "test": "ava -vs test/*.test.js"
   },
   "dependencies": {
+    "ava": "0.19.1",
     "aws-sdk": "2.3.3",
     "bluebird": "3.4.6",
     "body-parser": "1.17.2",
@@ -65,7 +66,6 @@
     "winston": "2.3.1"
   },
   "devDependencies": {
-    "ava": "^0.19.1",
     "babel-eslint": "6.0.4",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "11.1.3",

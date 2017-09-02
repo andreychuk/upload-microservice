@@ -1,21 +1,28 @@
 #!/bin/sh
 
-set -e
+GIT_REPO=$(git config --get remote.origin.url)
 
-GIT=git@github.com:andreychuk/upload-microservice.git
+echo "Cloning repostory : "
+echo $GIT_REPO
 
-if [ -z "$1" ]; then
-  echo "[ERROR] Specify version as a first argument. Example: ./build.sh v0.0.1"
+if [ $# -ne 2 ]; then
+  echo "[ERROR] Please specify two arguments (version docker_username). Example: ./build.sh v0.0.1 docker_username "
   exit
 fi
 
+
 rm -rf ./_build/.cache/
-git clone $GIT ./_build/.cache/
+mkdir -p ./_build/.cache/
+git clone $GIT_REPO ./_build/.cache/
 
 cd ./_build/.cache/
-git checkout $1
+git fetch --all --tags --prune
+git checkout tags/$1
 
-docker build -t andreychuk/upload-microservice:$1 ../
 cd ..
+
+docker build -t $2/upload-microservice:$1 ./
 rm -rf ./.cache/
-docker push andreychuk/upload-microservice:$1
+
+
+docker push $2/upload-microservice:$1

@@ -33,7 +33,7 @@
     "dev": "DEBUG=app* npm start",
     "lint": "eslint --ignore-path .gitignore ./",
     "coverage": "nyc npm run test && nyc report --reporter=text-summary",
-    "test": "ava -vs test/*.test.js"
+    "test": "ava -vs test/*.test.js test/test.js test/test-*.js test/**/*.js test/**/__tests__/**/*.js test/**/*.test.js"
   },
   "dependencies": {
     "ava": "0.19.1",

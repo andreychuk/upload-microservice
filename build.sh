@@ -25,4 +25,3 @@ docker build -t $2/upload-microservice:$1 ./
 rm -rf ./.cache/
 
 
-docker push $2/upload-microservice:$1

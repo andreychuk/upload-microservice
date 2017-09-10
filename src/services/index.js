@@ -23,4 +23,8 @@ module.exports = function () {
 
   app.service('/cloudinary/remove', { remove: removeFile.removeCloudinary });
 
+  app.service('/local/upload', { create: upload.uploadLocal });
+
+  app.service('/local/remove', { remove: removeFile.removeLocal });
+
 };

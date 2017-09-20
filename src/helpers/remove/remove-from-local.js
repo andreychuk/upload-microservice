@@ -5,7 +5,9 @@ module.exports = async (key) => {
 };
 
 function removeFile(key) {
-  return new Promise((resolve,reject) => {
+  return Promise((resolve,reject) => {
+    // Loading filename by key
+    // Deleting file
     
   });
 }

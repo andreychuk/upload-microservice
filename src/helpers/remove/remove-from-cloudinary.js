@@ -1,9 +1,9 @@
 const Promise = require('bluebird');
 const httpError = require('http-errors');
-const ClodinaryClient = require('cloudinary').v2;
+const client = require('../client/cloudinary-client');
 
 module.exports = async (key) => {
-  return removeFile(ClodinaryClient, key);
+  return removeFile(client, key);
 };
 
 function removeFile(client, key) {

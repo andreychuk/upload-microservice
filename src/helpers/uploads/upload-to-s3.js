@@ -1,4 +1,4 @@
-const client = require('../s3-client/s3-client');
+const client = require('../client/s3-client');
 const config = require('smart-config').get('aws');
 const uuid = require('uuid');
 const _ = require('lodash');

@@ -1,7 +1,8 @@
 const config = require('smart-config').get('local');
 const _ = require('lodash');
 const Promise = require('bluebird');
-const sqlite  = require('../db/sqlite');
+const httpError = require('http-errors');
+const LocalDb = require('../db/');
 
 module.exports = async ({ input }) => {
   return uploadMany(input);
@@ -18,9 +19,13 @@ function uploadMany(files) {
 
 function upload(file) {
   return Promise((resolve, reject) => {
-    const filekey = sqlite.saveFile(file);
-    const fileurl = '';
+    try {
+      const filekey = LocalDb.saveFile(file);
+      const fileurl = config.local.flies_baseurl + filekey;
 
-    resolve({ key: filekey, url: fileurl });
+      resolve({ key: filekey, url: fileurl });
+    } catch (err) {
+      return reject(httpError(err.statusCode, err.message));
+    }
   });
 }

@@ -15,11 +15,11 @@ function removeFile(filekey) {
       let filename = LocalDb.getFile(filekey);
 
       const fullname = config.local.files_path + filename;
-      
+
       // Deleting file
       fs.unlink(fullname, (err) => {
         if (err) throw err;
-        resolve({ message: 'OK' });
+        resolve({ key: filekey });
       });
     } catch (err) {
       return reject(httpError(err.statusCode, err.message));

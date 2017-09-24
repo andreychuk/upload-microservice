@@ -13,7 +13,11 @@
     "api_secret": "CLD_API_SECRET"
   },
   "local": {
-    "db_storage": "LOCAL_DB_STORAGE",
-    "files_path": "LOCAL_FILES_PATH"
+    "files_path": "LOCAL_FILES_PATH",
+    "flies_baseurl": "LOCAL_FILES_BASEURL"
+  },
+  "db": {
+    "driver": "DB_DRIVER",
+    "db_storage": "LOCAL_DB_STORAGE"
   }
 }

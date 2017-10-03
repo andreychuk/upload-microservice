@@ -23,11 +23,12 @@ Getting up and running is as easy as 1, 2, 3.
     npm start
     ```
 
+server is listening on port 8080
+
 ## Environment Variables
 
     
     DEBUG - All in app logs goes to 'app*'.
-    PORT - What port server is listening.
     
     NODE_ENV - production
     
@@ -40,6 +41,13 @@ Getting up and running is as easy as 1, 2, 3.
 
     POST /s3/upload
     DELETE /s3/remove/:key 
+
+## Upload Progress With nginx
+[NGINX Upload Progress Module](https://www.nginx.com/resources/wiki/modules/upload_progress)
+
+to use this add X-Progress-ID=**uuid_value** as query param to upload route
+
+to check status use `GET` /progress?X-Progress-ID=**same_uuid_value**
 
 ## Testing
 

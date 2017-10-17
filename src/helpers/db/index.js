@@ -3,6 +3,6 @@ const sqlite = require('./localdb-sqlite');
 
 module.exports = sqlite;
 
-if (config.db.driver === 'sqlite') {
+if (config.driver === 'sqlite') {
   module.exports = sqlite;
 }

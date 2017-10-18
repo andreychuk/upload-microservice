@@ -7,6 +7,6 @@ module.exports = {
   },
 
   uploadCloudinary: (body, params) => {
-    return upload.uploadCloudinary(body.file, params);
+    return upload.uploadCloudinary(body.files, params);
   }
 };

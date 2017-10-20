@@ -1,4 +1,4 @@
-const { test, superTest } = require('../test-env');
+const { test, superTest } = require('../test-env/_test_env');
 const path = require('path');
 
 test('test upload file', async (t) => {

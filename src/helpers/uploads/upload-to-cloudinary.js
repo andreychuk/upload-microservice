@@ -2,6 +2,9 @@ const client = require('../client/cloudinary-client');
 const _ = require('lodash');
 const Promise = require('bluebird');
 const httpError = require('http-errors');
+const config = require('smart-config').get('local');
+const uuidv4 = require('uuid/v4');
+const fs = require('fs');
 
 module.exports = async ({ input }) => {
   return uploadMany(client(), input);
@@ -9,10 +12,19 @@ module.exports = async ({ input }) => {
 
 function upload(client, file) {
   return new Promise((resolve, reject) => {
+    const tempFilename = getTempFilename(file);
 
-    client.uploader.upload(file.path, (error, result) => {
-      if (error) return reject(httpError(error.statusCode, error.message));
-      resolve({ key: result.public_id, url: result.url });
+    file.mv(tempFilename, (err) => {
+      if (err) {
+        return reject(httpError(500));
+      }
+      client.uploader.upload(tempFilename, (error, result) => {
+        fs.unlink(tempFilename, (err) => {
+          return reject(httpError(500, err));
+        });
+        if (error) return reject(httpError(error.statusCode, error.message));
+        resolve({ key: result.public_id, url: result.url });
+      });
     });
   });
 }
@@ -25,4 +37,8 @@ function uploadMany(client, files) {
   }
 
   return upload(client, files);
+}
+
+function getTempFilename(file) {
+  return config.files_temp + "/" + uuidv4() + file.name;
 }

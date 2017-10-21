@@ -8,5 +8,9 @@ module.exports = {
 
   uploadCloudinary: (body, params) => {
     return upload.uploadCloudinary(body.files, params);
+  },
+
+  uploadLocal: (body, params) => {
+    return upload.uploadLocal(body.files, params);
   }
 };

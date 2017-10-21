@@ -7,5 +7,9 @@ module.exports = {
 
   removeCloudinary: (id, params) => {
     return remove.removeCloudinary(id, params);
+  },
+
+  removeLocal: (id, params) => {
+    return remove.removeLocal(id, params);
   }
 };

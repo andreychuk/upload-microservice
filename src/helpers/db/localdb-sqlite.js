@@ -1,10 +1,10 @@
-const config = require('smart-config').get('local');
+const config = require('smart-config').get('db');
 const sqlite3 = require('sqlite3').verbose();
 const uuidv4 = require('uuid/v4');
 
 module.exports = function () {
 
-  let db = new sqlite3.Database(config.db_storage);
+  const db = new sqlite3.Database(config.db_storage);
 
   return {
 

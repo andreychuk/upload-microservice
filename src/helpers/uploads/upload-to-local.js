@@ -3,6 +3,7 @@ const _ = require('lodash');
 const Promise = require('bluebird');
 const httpError = require('http-errors');
 const LocalDb = require('../db/')();
+const uuidv4 = require('uuid/v4');
 
 module.exports = async ({ input }) => {
   return uploadMany(input);
@@ -19,12 +20,22 @@ function uploadMany(files) {
 
 function upload(file) {
   return new Promise((resolve, reject) => {
-    try {
-      const filekey = LocalDb.saveFile(file);
-      const fileurl = config.local.flies_baseurl + filekey;
-      resolve({ key: filekey, url: fileurl });
-    } catch (err) {
-      return reject(httpError(err.statusCode, err.message));
-    }
+    const tempFilename = getTargetFilename(file);
+    file.mv(tempFilename, (err) => {
+      if (err) {
+        return reject(httpError(500));
+      }
+      try {
+        const filekey = LocalDb.saveFile(tempFilename);
+        const fileurl = config.files_baseurl + filekey;
+        resolve({ key: filekey, url: fileurl });
+      } catch (err) {
+        return reject(httpError(err.statusCode, err.message));
+      }
+    });
   });
+}
+
+function getTargetFilename(file) {
+  return config.files_path + "/" + uuidv4() + file.name;
 }

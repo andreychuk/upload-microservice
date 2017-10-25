@@ -14,7 +14,7 @@
   },
   "local": {
     "files_path": "LOCAL_FILES_PATH",
-    "flies_baseurl": "LOCAL_FILES_BASEURL",
+    "files_baseurl": "LOCAL_FILES_BASEURL",
     "files_temp" : "LOCAL_FILES_TEMP"
   },
   "db": {

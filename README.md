@@ -42,6 +42,7 @@ Getting up and running is as easy as 1, 2, 3.
 
     LOCAL_DB_STORAGE - Local DB filename
     LOCAL_FILES_PATH - Local path to store files
+    LOCAL_FILES_TEMP - Temporary files storage path
 
 ## Routes
 
@@ -63,6 +64,9 @@ Simply run `npm test` and all your tests in the `test/` directory will be run.
 
 - [ ] add upload to [cloudinary](http://cloudinary.com)
 - [ ] add upload to local storage
+- [ ] implement file downloads from local storage
+- [ ] implement file resize/crop when downloading from local storage
+- [ ] rewrite Dockerfile to speed-up development builds
 
 ## License
 

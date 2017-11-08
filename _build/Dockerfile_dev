@@ -1,0 +1,21 @@
+FROM node:7.7.4-alpine
+
+RUN mkdir -p /usr/src/app
+
+ADD ../package.json /tmp/package.json
+RUN CD /tmp && npm install
+RUN CP -a /tmp/node_modules /usr/src/app
+
+WORKDIR /usr/src/app
+ADD ../src /usr/src/app
+ADD ../package.json /usr/src/app
+ADD ../config /usr/src/app
+
+# mounting local storage volume
+ADD ../local /usr/src/app
+
+RUN apk add --update sqlite && \
+    sqlite3 /usr/src/app/local/db.sqlt -init /usr/src/app/local/db.schema
+
+EXPOSE 8080
+CMD [ "npm", "start" ]

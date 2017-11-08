@@ -21,7 +21,5 @@ git checkout tags/$1
 
 cd ..
 
-docker build -t $2/upload-microservice:$1 ./
+docker build -t $2/upload-microservice:$1 -f Dockerfile ./
 rm -rf ./.cache/
-
-

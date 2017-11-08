@@ -1,0 +1,14 @@
+version: "3.2"
+
+services:
+  upload-microservice:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./src
+        target: /usr/src/app/src
+      - type: bind
+        source: ./local
+        target: /usr/src/app/local

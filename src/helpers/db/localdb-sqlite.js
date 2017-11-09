@@ -8,15 +8,13 @@ module.exports = function () {
 
   return {
 
-    createTables() {
-      db.run('CREATE TABLE IF NOT EXISTS storedfiles(filekey text PRIMARY KEY,filename text)');
-    },
-
     saveFile(filename) {
       let key = uuidv4();
 
       db.run("INSERT INTO storedfiles(filekey,filename) VALUES (?,?)", [key, filename], (err) => {
-        throw err;
+        if (err) {
+          throw err;
+        }
       });
 
       return key;
@@ -33,7 +31,9 @@ module.exports = function () {
 
     deleteFile(key) {
       db.run(`DELETE FROM storedfiles WHERE filekey = ?`, [key], (err) => {
-        throw err;
+        if (err) {
+          throw err;
+        }
       });
     }
   };

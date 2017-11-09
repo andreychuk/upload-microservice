@@ -5,10 +5,12 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    ports:
+      - "3035:3035"
     volumes:
       - type: bind
         source: ./src
         target: /usr/src/app/src
       - type: bind
-        source: ./local
-        target: /usr/src/app/local
+        source: ./local/files
+        target: /usr/src/app/local/files

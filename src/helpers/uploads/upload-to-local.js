@@ -4,6 +4,7 @@ const Promise = require('bluebird');
 const httpError = require('http-errors');
 const LocalDb = require('../db/')();
 const uuidv4 = require('uuid/v4');
+const path = require('path');
 
 module.exports = async ({ input }) => {
   return uploadMany(input);
@@ -20,8 +21,10 @@ function uploadMany(files) {
 
 function upload(file) {
   return new Promise((resolve, reject) => {
-    const tempFilename = getTargetFilename(file);
-    file.mv(tempFilename, (err) => {
+    const tempFilename = getTargetFilename(file.name);
+    const tempFullname = getTargetFullname(tempFilename);
+
+    file.mv(tempFullname, (err) => {
       if (err) {
         return reject(httpError(500));
       }
@@ -36,6 +39,10 @@ function upload(file) {
   });
 }
 
-function getTargetFilename(file) {
-  return config.files_path + "/" + uuidv4() + file.name;
+function getTargetFullname(filename) {
+  return path.join(config.files_path, "/", filename);
+}
+
+function getTargetFilename(filename) {
+  return "" + uuidv4() + filename;
 }

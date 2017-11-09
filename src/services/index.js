@@ -3,6 +3,7 @@ const { serverStatus } = require('node-helpers');
 
 const upload = require('./upload/file-upload');
 const removeFile = require('./remove/file-remove');
+const getFile = require('./get/file-get');
 
 const fileUpload = require('express-fileupload');
 const filesToBody = require('../middleware/files-to-body');
@@ -26,5 +27,7 @@ module.exports = function () {
   app.service('/local/upload', { create: upload.uploadLocal });
 
   app.service('/local/remove', { remove: removeFile.removeLocal });
+
+  app.service('/local/get', { remove: getFile.getLocal });
 
 };

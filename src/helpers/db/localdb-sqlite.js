@@ -9,31 +9,48 @@ module.exports = function () {
   return {
 
     saveFile(filename) {
-      let key = uuidv4();
+      return new Promise((resolve, reject) => {
+        let key = uuidv4();
 
-      db.run("INSERT INTO storedfiles(filekey,filename) VALUES (?,?)", [key, filename], (err) => {
-        if (err) {
-          throw err;
-        }
+        db.run("INSERT INTO storedfiles(filekey,filename) VALUES (?,?)", [key, filename], (err) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(key);
+        });
       });
-
-      return key;
     },
 
-    getFile(key) {
-      db.get(`SELECT filename FROM storedfiles WHERE filekey = ?`, [key], (err, row) => {
-        if (err) {
-          throw err;
-        }
-        return row.filename;
+    getFile: (key) => {
+      return new Promise((resolve, reject) => {
+        db.get("SELECT filename FROM storedfiles WHERE filekey = ?", [key], (err, row) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(row.filename);
+        });
       });
     },
 
     deleteFile(key) {
-      db.run(`DELETE FROM storedfiles WHERE filekey = ?`, [key], (err) => {
-        if (err) {
-          throw err;
+      return new Promise((resolve, reject) => {
+        db.run("DELETE FROM storedfiles WHERE filekey = ?", [key], (err) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(true);
+        });
+      });
+    },
+
+    closeConnection: () => {
+      return new Promise((resolve, reject) => {
+        try {
+          db.close();
+        } catch (err) {
+          reject(err);
         }
+        resolve(true);
       });
     }
   };

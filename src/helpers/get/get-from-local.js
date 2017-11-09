@@ -2,29 +2,25 @@ const config = require('smart-config').get('local');
 const Promise = require('bluebird');
 const fs = require('fs');
 const httpError = require('http-errors');
-const LocalDb = require('../db/');
+const LocalDb = require('../db/')();
+const path = require('path');
 
 module.exports = async (key) => {
   return getFile(key);
 };
 
 function getFile(key) {
-  return Promise((resolve, reject) => {
-    try {
-      let filename = LocalDb.getFile(key);
-      const fullname = config.local.files_path + filename;
-
+  return new Promise((resolve, reject) => {
+    LocalDb.getFile(key).then((filename) => {
+      const fullname = path.join(config.files_path, filename);
       fs.readFile(fullname, (err, data) => {
         if (err) {
-          throw err;
+          return reject(httpError(err.statusCode, err.message));
         }
-        if (data) {
-          return resolve();
-        }
+        return resolve({ fileName: filename, fileData: data });
       });
-
-    } catch (err) {
+    }).catch((err) => {
       return reject(httpError(err.statusCode, err.message));
-    }
+    });
   });
 }

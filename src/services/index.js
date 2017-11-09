@@ -28,6 +28,5 @@ module.exports = function () {
 
   app.service('/local/remove', { remove: removeFile.removeLocal });
 
-  app.service('/local/get', { remove: getFile.getLocal });
-
+  app.service('/local/get', { get: getFile.getLocal });
 };

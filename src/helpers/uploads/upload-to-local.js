@@ -29,9 +29,11 @@ function upload(file) {
         return reject(httpError(500));
       }
       try {
-        const filekey = LocalDb.saveFile(tempFilename);
-        const fileurl = config.files_baseurl + filekey;
-        resolve({ key: filekey, url: fileurl });
+        LocalDb.saveFile(tempFilename).then((filekey) => {
+          const fileurl = config.files_baseurl + filekey;
+
+          resolve({ key: filekey, url: fileurl });
+        });
       } catch (err) {
         return reject(httpError(err.statusCode, err.message));
       }

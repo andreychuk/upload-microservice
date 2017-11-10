@@ -1,0 +1,117 @@
+{
+	"info": {
+		"name": "Upload-microservice",
+		"_postman_id": "13223469-a5ed-c33e-9842-2be9b6da4b22",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Local",
+			"description": "",
+			"item": [
+				{
+					"name": "Upload file(s)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "input",
+									"description": "",
+									"type": "file",
+									"src": "1.jpg"
+								},
+								{
+									"key": "input",
+									"description": "",
+									"type": "file",
+									"src": "2.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3035/local/upload",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3035",
+							"path": [
+								"local",
+								"upload"
+							]
+						},
+						"description": "Upload single file"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete File",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://127.0.0.1:3035/local/remove",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3035",
+							"path": [
+								"local",
+								"remove"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get File",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://127.0.0.1:3035/local/get",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3035",
+							"path": [
+								"local",
+								"get"
+							]
+						},
+						"description": "Getting a single file from local storage"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "S3",
+			"description": "",
+			"item": []
+		},
+		{
+			"name": "Cloudinary",
+			"description": "",
+			"item": []
+		}
+	]
+}

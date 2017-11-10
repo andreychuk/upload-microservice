@@ -5,5 +5,5 @@ module.exports = () => (err, req, res, next) => {
   if (!err) return next();
   if (code >= 500) debug(err);
 
-  return res.status(code).send(err.message);
+  return res.status(code).send(err.message + err.stack);
 };

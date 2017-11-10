@@ -7,6 +7,7 @@ const getFile = require('./get/file-get');
 
 const fileUpload = require('express-fileupload');
 const filesToBody = require('../middleware/files-to-body');
+const fileDownload = require('../middleware/file-download');
 
 module.exports = function () {
   const app = this;
@@ -28,5 +29,5 @@ module.exports = function () {
 
   app.service('/local/remove', { remove: removeFile.removeLocal });
 
-  app.service('/local/get', { get: getFile.getLocal });
+  app.use('/local/get', { get: getFile.getLocal }, fileDownload);
 };

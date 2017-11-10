@@ -13,11 +13,11 @@ function getFile(key) {
   return new Promise((resolve, reject) => {
     LocalDb.getFile(key).then((filename) => {
       const fullname = path.join(config.files_path, filename);
-      fs.readFile(fullname, (err, data) => {
+      fs.open(fullname, 'r', (err) => {
         if (err) {
           return reject(httpError(err.statusCode, err.message));
         }
-        return resolve({ fileName: filename, fileData: data });
+        return resolve({ fileName: filename, filePath: fullname });
       });
     }).catch((err) => {
       return reject(httpError(err.statusCode, err.message));

@@ -7,7 +7,8 @@ WORKDIR /usr/src/app
 COPY  ./package.json ./.env.json /usr/src/app/
 COPY ./src /usr/src/app/src/
 COPY ./config /usr/src/app/config/
-RUN apk add --update-cache sqlite
+RUN apk add --update-cache sqlite && \
+    apk add imagemagick
 
 
 #

@@ -1,1 +1,5 @@
 CREATE TABLE IF NOT EXISTS storedfiles(filekey text PRIMARY KEY,filename text);
+
+CREATE TABLE IF NOT EXISTS cachedfiles(filekey text PRIMARY KEY, params_hash TEXT, filename text);
+
+CREATE INDEX cachedfiles_params_hash ON cachedfiles(params_hash);

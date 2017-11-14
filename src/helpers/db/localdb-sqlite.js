@@ -14,9 +14,9 @@ module.exports = function () {
 
         db.run("INSERT INTO storedfiles(filekey,filename) VALUES (?,?)", [key, filename], (err) => {
           if (err) {
-            reject(err);
+            return reject(err);
           }
-          resolve(key);
+          return resolve(key);
         });
       });
     },
@@ -25,9 +25,50 @@ module.exports = function () {
       return new Promise((resolve, reject) => {
         db.get("SELECT filename FROM storedfiles WHERE filekey = ?", [key], (err, row) => {
           if (err) {
-            reject(err);
+            return reject(err);
           }
-          resolve(row.filename);
+          if (row) {
+            return resolve(row.filename);
+          }
+          return resolve(false);
+        });
+      });
+    },
+
+    getCached: (hash) => {
+      return new Promise((resolve, reject) => {
+        db.get("SELECT filekey, filename FROM cachedfiles WHERE params_hash = ?", [hash], (err, row) => {
+          if (err) {
+            return reject(err);
+          }
+          if (row) {
+            return resolve(row.filename);
+          }
+          return reject(false);
+        });
+      });
+    },
+
+    saveCached: (paramsHash, filename) => {
+      return new Promise((resolve, reject) => {
+        const key = uuidv4();
+        const qry = "INSERT INTO cachedfiles(filekey, params_hash, filename) VALUES (?,?,?)";
+        db.run(qry, [key, paramsHash, filename], (err) => {
+          if (err) {
+            return reject(err);
+          }
+          return resolve(key);
+        });
+      });
+    },
+
+    deleteCached(key) {
+      return new Promise((resolve, reject) => {
+        db.run("DELETE FROM cachedfiles WHERE filekey = ?", [key], (err) => {
+          if (err) {
+            return reject(err);
+          }
+          return resolve(true);
         });
       });
     },
@@ -36,9 +77,9 @@ module.exports = function () {
       return new Promise((resolve, reject) => {
         db.run("DELETE FROM storedfiles WHERE filekey = ?", [key], (err) => {
           if (err) {
-            reject(err);
+            return reject(err);
           }
-          resolve(true);
+          return resolve(true);
         });
       });
     },
@@ -48,9 +89,9 @@ module.exports = function () {
         try {
           db.close();
         } catch (err) {
-          reject(err);
+          return reject(err);
         }
-        resolve(true);
+        return resolve(true);
       });
     }
   };

@@ -13,16 +13,28 @@ module.exports = async (key, params) => {
 function getFile(key, params) {
   return new Promise((resolve, reject) => {
     LocalDb.getFile(key).then((filename) => {
-      const fullname = path.join(config.files_path, filename);
+      if (filename === false) {
+        return reject(httpError(404));
+      }
+      let fullname = path.join(config.files_path, "/", filename);
       fs.open(fullname, 'r', (err) => {
         if (err) {
           return reject(httpError(err.statusCode, err.message));
         }
 
-        if (Object.keys(params.query).length < 0) {
-          return resize.process(filename, fullname, params);
-        }
-        return resolve({ fileName: filename, filePath: fullname });
+        let resizeParams = resize.paramsParse(params.query);
+
+        resizeParams = resize.paramsValidate(resizeParams);
+
+        resize.process(filename, fullname, resizeParams).then((data) => {
+          fullname = data.filePath;
+          return resolve(data);
+        },
+        (err) => {
+          return reject(err);
+        }).then(() => {
+          return resolve({ fileName: filename, filePath: fullname });
+        });
       });
     }).catch((err) => {
       return reject(httpError(err.statusCode, err.message));

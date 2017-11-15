@@ -19,10 +19,10 @@ module.exports = {
     height = this.parseDimension(height, imageHeight);
 
     if (width && height === 0) {
-      height = Math.round(imageHeight * (imageWidth / width));
+      height = Math.round(imageHeight * (width / imageWidth));
     }
     if (height && width === 0) {
-      width = Math.round(imageWidth * (imageHeight / height));
+      width = Math.round(imageWidth * (height / imageHeight));
     }
     return {
       width,

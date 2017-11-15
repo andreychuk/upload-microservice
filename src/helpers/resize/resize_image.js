@@ -1,8 +1,8 @@
 const paramsHash = require('./resize_params_hash');
+const paramsSanitize = require('./resize_params_sanitize');
 const path = require('path');
 const db = require('./../db')();
 const config = require('smart-config').get('local');
-const validator = require('validator');
 const gm = require('gm').subClass({
   imageMagick: true
 });
@@ -14,6 +14,10 @@ module.exports = (filename, fullname, params) => {
       filePath: fullname
     };
 
+    if (Object.keys(params).length === 0) {
+      return resolve(results);
+    }
+
     const strHash = paramsHash(params);
 
     db.getCached(strHash)
@@ -23,39 +27,36 @@ module.exports = (filename, fullname, params) => {
       },
       (err) => {
         if (err !== false) {
-          reject(err);
-        }
-
-        let targetWidth = 0;
-        let targetHeight = 0;
-
-        if (typeof params.width !== 'undefined') {
-          targetWidth = params.width;
-        }
-
-        if (typeof params.height !== 'undefined') {
-          targetHeight = params.height;
+          return reject(err);
         }
 
         let sourceImage = gm(fullname);
 
-        if (validator.isInt(String(targetWidth)) && validator.isInt(String(targetHeight))) {
-          sourceImage.resize(targetWidth, targetHeight);
-        }
-
-        const resultFilename = path.join(strHash + results.fileName);
-
-        sourceImage.write(path.join(config.files_path, "/", resultFilename), (err) => {
+        sourceImage.size((err, size) => {
           if (err) {
-            reject(err);
+            return reject(err);
           }
-          db.saveCached(strHash, resultFilename).then(() => {
-            results.filePath = path.join(config.files_path, "/", resultFilename);
-            resolve(results);
-          }).catch((err) => {
-            reject(err);
+          let resizeDimensions = paramsSanitize
+            .parseParams(params.width || 0, params.height || 0, size.width, size.height);
+
+          if (resizeDimensions.width > 0 && resizeDimensions.height > 0) {
+            sourceImage.resizeExact(resizeDimensions.width, resizeDimensions.height);
+          }
+
+          const resultFilename = path.join(strHash + results.fileName);
+          sourceImage.write(path.join(config.files_path, "/", resultFilename), (err) => {
+            if (err) {
+              reject(err);
+            }
+            db.saveCached(strHash, resultFilename).then(() => {
+              results.filePath = path.join(config.files_path, "/", resultFilename);
+              resolve(results);
+            }).catch((err) => {
+              reject(err);
+            });
           });
         });
+
       });
 
   });

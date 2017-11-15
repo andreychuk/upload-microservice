@@ -6,6 +6,7 @@ const LocalDb = require('../db/')();
 const path = require('path');
 const resize = require('../resize');
 
+
 module.exports = async (key, params) => {
   return getFile(key, params);
 };
@@ -23,18 +24,15 @@ function getFile(key, params) {
         }
 
         let resizeParams = resize.paramsParse(params.query);
-
         resizeParams = resize.paramsValidate(resizeParams);
 
-        resize.process(filename, fullname, resizeParams).then((data) => {
-          fullname = data.filePath;
-          return resolve(data);
-        },
-        (err) => {
-          return reject(err);
-        }).then(() => {
-          return resolve({ fileName: filename, filePath: fullname });
-        });
+        resize.process(filename, fullname, resizeParams)
+          .then((data) => {
+            return resolve(data);
+          })
+          .catch((err) => {
+            return reject(err);
+          });
       });
     }).catch((err) => {
       return reject(httpError(err.statusCode, err.message));

@@ -19,6 +19,6 @@ module.exports = (query) => {
       }
     });
   });
-  
+
   return results;
 };

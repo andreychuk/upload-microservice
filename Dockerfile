@@ -11,10 +11,10 @@ RUN apk add --update-cache sqlite && \
 #
 #---- Dependecies ----
 FROM base as dependencies
+ENV NPM_INSTALL_ARGS=install
 COPY ./package.json /usr/src/app
-RUN npm install --production && \
-    cp -R node_modules prod_node_modules && \
-    npm install
+RUN npm $NPM_INSTALL_ARGS
+
 
 #
 #---- Tests ----
@@ -24,17 +24,20 @@ COPY ./test /usr/src/app/test/
 #
 #---- Local storage ----
 FROM base as local_storage
+ENV LOCAL_DB_STORAGE=/usr/src/app/local/db.sqlt
 COPY ./local /usr/src/app/local
-RUN  /usr/bin/sqlite3 /usr/src/app/local/db.sqlt < /usr/src/app/local/db.schema
+RUN [ -f $LOCAL_DB_STORAGE ] && /usr/bin/sqlite3 $LOCAL_DB_STORAGE < /usr/src/app/local/db.schema || echo "Database already exists"
 
 #
 #---- Release ----
 FROM base as release
-COPY ./.env.json /usr/src/app/
+ENV PORT=3035
+WORKDIR /usr/src/app
 COPY ./src /usr/src/app/src/
-COPY ./config /usr/src/app/config/
+COPY ./config /usr/src/app/config
+COPY ./package.json /usr/src/app/
 COPY --from=local_storage /usr/src/app/local /usr/src/app/local
-COPY --from=dependencies /usr/src/app/prod_node_modules /usr/src/app/node_modules
+COPY --from=dependencies /usr/src/app/node_modules /usr/src/app/node_modules
 COPY --from=tests /usr/src/app/test /usr/src/app/test
-EXPOSE 3035
-CMD [ "npm", "run", "dev" ]
+EXPOSE $PORT
+CMD [ "npm", "run", "start" ]

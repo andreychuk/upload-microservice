@@ -2,15 +2,24 @@ version: "3.2"
 
 services:
   upload-microservice:
+    image: upload-microservice:latest
     build:
       context: ./
       dockerfile: Dockerfile
+    environment:
+      - NPM_INSTALL_ARGS=install --production
     ports:
       - "3035:3035"
     volumes:
       - type: bind
         source: ./src
         target: /usr/src/app/src
+      - type: bind
+        source: ./config
+        target: /usr/src/app/config
+      - type: bind
+        source: ./test
+        target: /usr/src/app/test
       - type: bind
         source: ./local/files
         target: /usr/src/app/local/files

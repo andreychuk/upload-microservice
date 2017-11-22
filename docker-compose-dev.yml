@@ -1,0 +1,7 @@
+version: "3.2"
+
+services:
+  upload-microservice:
+    image: upload-microservice:dev
+    environment:
+      - DEBUG=app*

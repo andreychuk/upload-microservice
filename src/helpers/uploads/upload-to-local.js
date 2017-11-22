@@ -28,15 +28,13 @@ function upload(file) {
       if (err) {
         return reject(httpError(500));
       }
-      try {
-        LocalDb.saveFile(tempFilename).then((filekey) => {
-          const fileurl = config.files_baseurl + filekey;
 
-          resolve({ key: filekey, url: fileurl });
-        });
-      } catch (err) {
-        return reject(httpError(err.statusCode, err.message));
-      }
+      LocalDb.saveFile(tempFilename).then((filekey) => {
+        const fileurl = config.files_baseurl + 'local/get/' + filekey;
+        return resolve({ key: filekey, url: fileurl });
+      }).catch((err) => {
+        return reject(httpError(err.statusCode, err.Message));
+      });
     });
   });
 }

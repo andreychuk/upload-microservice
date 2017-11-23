@@ -11,15 +11,13 @@ services:
     ports:
       - "3035:3035"
     volumes:
-      - type: bind
-        source: ./src
-        target: /usr/src/app/src
-      - type: bind
-        source: ./config
-        target: /usr/src/app/config
-      - type: bind
-        source: ./test
-        target: /usr/src/app/test
-      - type: bind
-        source: ./local/files
-        target: /usr/src/app/local/files
+      - "sources:/usr/src/app/src"
+      - "tests:/usr/src/app/test"
+      - "config:/usr/src/app/config"
+      - "local_data:/usr/src/app/local"
+
+volumes:
+  local_data:
+  config:
+  tests:
+  sources:

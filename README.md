@@ -25,7 +25,6 @@ Getting up and running is as easy as 1, 2, 3.
 
 ## Environment Variables
 
-
     DEBUG - All in app logs goes to 'app*'.
     PORT - What port server is listening.
 
@@ -40,9 +39,7 @@ Getting up and running is as easy as 1, 2, 3.
     CLD_API_KEY - Cloudinary API key
     CLD_API_SECRET - Cloudinary API secret
 
-    LOCAL_DB_STORAGE - Local DB filename
-    LOCAL_FILES_PATH - Local path to store files
-    LOCAL_FILES_TEMP - Temporary files storage path
+    LOCAL_FILES_BASEURL - prefix to be used when returning uploaded file URL
 
 ## Routes
 
@@ -56,17 +53,27 @@ Getting up and running is as easy as 1, 2, 3.
     DELETE /local/remove/:key
     GET /local/get/:key
 
+    GET /local/get/:key?w_:width,h_:height
+
+## Deployment
+Microservice is deployable as Docker image, following named volumes are defined:
+  local_data: local data storage with required folders, DB schema and DB file
+  config: application configuration files
+  tests: unit-tests with data for testing
+  sources: application sources
+
+
+## Local image storage and getting resized images
+Images uploaded to local storage can be resized on get, using GET parameters passed to route in following format
+w_:width - :width - positive number, target width in pixels, if given number is lesser than 1 - ratio to original width
+h_:height - :height - positive number, target height in pixels, if given number is lesser than 1 - ratio to original height
+In case if only width or height given - target image is resized to that dimension keeping aspect ratio.
+In case if both width and height are given - target image is resized to given dimensions without keeping the aspect ratio.
+
 ## Testing
 
 Simply run `npm test` and all your tests in the `test/` directory will be run.
 
-## TODO
-
-- [ ] add upload to [cloudinary](http://cloudinary.com)
-- [ ] add upload to local storage
-- [ ] implement file downloads from local storage
-- [ ] implement file resize/crop when downloading from local storage
-- [ ] rewrite Dockerfile to speed-up development builds
 
 ## License
 

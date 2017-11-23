@@ -13,12 +13,12 @@
     "api_secret": "CLD_API_SECRET"
   },
   "local": {
-    "files_path": "LOCAL_FILES_PATH",
+    "files_path": "local/files",
     "files_baseurl": "LOCAL_FILES_BASEURL",
-    "files_temp" : "LOCAL_FILES_TEMP"
+    "files_temp" : "local/temp"
   },
   "db": {
-    "driver": "DB_DRIVER",
-    "db_storage": "LOCAL_DB_STORAGE"
+    "driver": "sqlite",
+    "db_storage": "local/db.sqlt"
   }
 }

@@ -24,9 +24,9 @@ COPY ./test /usr/src/app/test/
 #
 #---- Local storage ----
 FROM base as local_storage
-ENV LOCAL_DB_STORAGE=/usr/src/app/local/db.sqlt
 COPY ./local /usr/src/app/local
-RUN [ -f $LOCAL_DB_STORAGE ] && /usr/bin/sqlite3 $LOCAL_DB_STORAGE < /usr/src/app/local/db.schema || echo "Database already exists"
+RUN /usr/bin/sqlite3 /usr/src/app/local/db.sqlt < /usr/src/app/local/db.schema && \
+  rm /usr/src/app/local/db.schema
 
 #
 #---- Release ----

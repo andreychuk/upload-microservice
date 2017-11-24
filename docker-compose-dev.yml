@@ -5,3 +5,4 @@ services:
     image: upload-microservice:dev
     environment:
       - DEBUG=app*
+      - JWT_SECRET=thatsmysecret

@@ -33,6 +33,7 @@ RUN /usr/bin/sqlite3 /usr/src/app/local/db.sqlt < /usr/src/app/local/db.schema &
 FROM base as release
 ENV PORT=3035
 WORKDIR /usr/src/app
+VOLUME [ "/usr/src/app/src", "/usr/src/app/test", "/usr/src/app/config", "/usr/src/app/local" ]
 COPY ./src /usr/src/app/src/
 COPY ./config /usr/src/app/config
 COPY ./package.json /usr/src/app/

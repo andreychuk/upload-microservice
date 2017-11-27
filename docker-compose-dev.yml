@@ -6,3 +6,8 @@ services:
     environment:
       - DEBUG=app*
       - JWT_SECRET=thatsmysecret
+    volumes:
+      - "./src:/usr/src/app/src"
+      - "./test:/usr/src/app/test"
+      - "./config:/usr/src/app/config"
+      - "./local:/usr/src/app/local"

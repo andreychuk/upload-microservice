@@ -11,13 +11,7 @@ services:
     ports:
       - "3035:3035"
     volumes:
-      - "sources:/usr/src/app/src"
-      - "tests:/usr/src/app/test"
-      - "config:/usr/src/app/config"
       - "local_data:/usr/src/app/local"
 
 volumes:
   local_data:
-  config:
-  tests:
-  sources:

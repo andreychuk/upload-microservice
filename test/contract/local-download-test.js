@@ -4,15 +4,23 @@ const fs = require('fs');
 const gm = require('gm').subClass({
   imageMagick: true
 });
+const jwtSecret = require('smart-config').get('JWTSecret');
+const jwt = require('jsonwebtoken');
 
 test.beforeEach('upload file for testing', async (t) => {
   if (typeof t.context.uploaded === 'undefined') {
+    t.context = {};
+    t.context.token = jwt.sign({}, jwtSecret);
+
     const resp = await superTest.post('/local/upload')
-      .attach('input', path.join(__dirname, '..', '/tmp/size_640_400.jpg'));
+      .attach('input', path.join(__dirname, '..', '/tmp/size_640_400.jpg'))
+      .set('Authorization', t.context.token);
 
     t.is(resp.statusCode, 201);
-    t.context = {};
+
     t.context.uploaded = resp.body;
+
+
     fs.stat(path.join(__dirname, '..', '/tmp/size_640_400.jpg'), (err, stats) => {
       if (err) {
         t.fail(err);
@@ -23,7 +31,8 @@ test.beforeEach('upload file for testing', async (t) => {
 });
 
 test('test download file local', async (t) => {
-  const resp = await superTest.get('/local/get/' + t.context.uploaded.key);
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key)
+    .set('Authorization', t.context.token);
 
   t.is(resp.statusCode, 200);
   t.is(resp.type, 'image/jpeg');
@@ -31,7 +40,8 @@ test('test download file local', async (t) => {
 });
 
 test('test download file local + resize width', async (t) => {
-  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?w_200');
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?w_200')
+    .set('Authorization', t.context.token);
 
   t.is(resp.statusCode, 200);
 
@@ -45,7 +55,8 @@ test('test download file local + resize width', async (t) => {
 });
 
 test('test download file local + resize height', async (t) => {
-  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?h_250');
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?h_250')
+    .set('Authorization', t.context.token);
 
   t.is(resp.statusCode, 200);
   gm(resp.body).size((err, size) => {
@@ -57,7 +68,8 @@ test('test download file local + resize height', async (t) => {
 });
 
 test('test download file local + resize width and height', async (t) => {
-  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?w_250,h_250');
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?w_250,h_250')
+    .set('Authorization', t.context.token);
 
   t.is(resp.statusCode, 200);
   gm(resp.body).size((err, size) => {
@@ -70,7 +82,8 @@ test('test download file local + resize width and height', async (t) => {
 });
 
 test('test download file local + resize width non-valid arguments', async (t) => {
-  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?abracadabra');
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?abracadabra')
+    .set('Authorization', t.context.token);
 
   t.is(resp.statusCode, 200);
   // Should return original image

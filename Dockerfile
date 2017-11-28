@@ -25,8 +25,7 @@ COPY ./test /usr/src/app/test/
 #---- Local storage ----
 FROM base as local_storage
 COPY ./local /usr/src/app/local
-RUN /usr/bin/sqlite3 /usr/src/app/local/db.sqlt < /usr/src/app/local/db.schema && \
-  rm /usr/src/app/local/db.schema
+RUN /usr/bin/sqlite3 /usr/src/app/local/db.sqlt < /usr/src/app/local/db.schema
 
 #
 #---- Release ----

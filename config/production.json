@@ -1,7 +1,7 @@
 {
   "host": "0.0.0.0",
   "port": "PORT",
-  "JWTSecret": "",
+  "JWTSecret": "JWT_SECRET",
   "aws": {
     "accessKeyId": "AWS_ACCESS_KEY_ID",
     "secretAccessKey": "AWS_SECRET_ACCESS_KEY",

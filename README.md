@@ -41,6 +41,8 @@ Getting up and running is as easy as 1, 2, 3.
 
     LOCAL_FILES_BASEURL - prefix to be used when returning uploaded file URL
 
+    JWT_SECRET - Shared secret key to be used for JWT token auth.
+
 ## Routes
 
     POST /s3/upload
@@ -57,11 +59,14 @@ Getting up and running is as easy as 1, 2, 3.
 
 ## Deployment
 Microservice is deployable as Docker image, following named volumes are defined:
-  local_data: local data storage with required folders, DB schema and DB file
-  config: application configuration files
-  tests: unit-tests with data for testing
-  sources: application sources
+  * local_data: local data storage with required folders, DB schema and DB file
+  * config: application configuration files
+  * tests: unit-tests with data for testing
+  * sources: application sources
 
+
+## Authentication
+  Microservice uses JWT-based token authentication, token must be configured using JWT_SECRET environment variable. Tokens should be passed with 'accessToken' request header.
 
 ## Local image storage and getting resized images
 Images uploaded to local storage can be resized on get, using GET parameters passed to route in following format

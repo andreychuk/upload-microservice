@@ -3,6 +3,9 @@ version: "3.2"
 services:
   upload-microservice:
     image: upload-microservice:dev
+    build:
+      args:
+        npm_install_args: install
     environment:
       - DEBUG=app*
       - JWT_SECRET=thatsmysecret

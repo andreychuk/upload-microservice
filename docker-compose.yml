@@ -6,8 +6,8 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    environment:
-      - NPM_INSTALL_ARGS=install --production
+      args:
+        npm_install_args: install --production
     ports:
       - "3035:3035"
     volumes:

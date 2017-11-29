@@ -60,9 +60,6 @@ Getting up and running is as easy as 1, 2, 3.
 ## Deployment
 Microservice is deployable as Docker image, following named volumes are defined:
   * local_data: local data storage with required folders, DB schema and DB file
-  * config: application configuration files
-  * tests: unit-tests with data for testing
-  * sources: application sources
 
 
 ## Authentication
@@ -83,6 +80,10 @@ Microservice is deployable as Docker image, following named volumes are defined:
 
 Simply run `npm test` and all your tests in the `test/` directory will be run.
 
+
+## TODO
+
+ - [ ] Implement data validation
 
 ## License
 

@@ -39,7 +39,7 @@ Getting up and running is as easy as 1, 2, 3.
     CLD_API_KEY - Cloudinary API key
     CLD_API_SECRET - Cloudinary API secret
 
-    LOCAL_FILES_BASEURL - prefix to be used when returning uploaded file URL
+    LOCAL_FILES_BASEURL - prefix to be used when returning uploaded file URL. Expected to end with "/"
 
     JWT_SECRET - Shared secret key to be used for JWT token auth.
 

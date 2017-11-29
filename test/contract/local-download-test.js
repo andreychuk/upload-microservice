@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 test.beforeEach('upload file for testing', async (t) => {
   if (typeof t.context.uploaded === 'undefined') {
     t.context = {};
-    t.context.token = jwt.sign({}, jwtSecret);
+    t.context.token = 'Bearer ' + jwt.sign({}, jwtSecret);
 
     const resp = await superTest.post('/local/upload')
       .attach('input', path.join(__dirname, '..', '/tmp/size_640_400.jpg'))

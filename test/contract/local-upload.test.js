@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 test.beforeEach('prepare jwt token', async (t) => {
   t.context = {};
-  t.context.token = jwt.sign({}, jwtSecret);
+  t.context.token = 'Bearer ' + jwt.sign({}, jwtSecret);
 });
 
 test('test upload file local', async (t) => {

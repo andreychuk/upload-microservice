@@ -5,7 +5,7 @@ const jwtSecret = require('smart-config').get('JWTSecret');
 const jwt = require('jsonwebtoken');
 
 test('test upload large file', async (t) => {
-  const ValidToken = jwt.sign({}, jwtSecret);
+  const ValidToken = 'Bearer ' + jwt.sign({}, jwtSecret);
 
   const resp = await superTest.post('/s3/upload')
     .attach('input', path.join(__dirname, '..', '/tmp/large.jpg'))

@@ -43,4 +43,3 @@ COPY ./init.sh /usr/src/app
 COPY ./src /usr/src/app/src/
 EXPOSE $PORT
 CMD [ "/usr/src/app/init.sh" ]
-ENTRYPOINT [ "npm", "run", "start" ]

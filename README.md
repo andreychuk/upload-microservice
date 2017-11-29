@@ -66,14 +66,18 @@ Microservice is deployable as Docker image, following named volumes are defined:
 
 
 ## Authentication
-  Microservice uses JWT-based token authentication, token must be configured using JWT_SECRET environment variable. Tokens should be passed with 'accessToken' request header.
+  Microservice uses JWT-based token authentication (https://jwt.io). Token must be configured using JWT_SECRET environment variable. Tokens should be passed with 'Authorization' request header, using the Bearer schema (https://tools.ietf.org/html/rfc6750)
 
 ## Local image storage and getting resized images
-Images uploaded to local storage can be resized on get, using GET parameters passed to route in following format
-w_:width - :width - positive number, target width in pixels, if given number is lesser than 1 - ratio to original width
-h_:height - :height - positive number, target height in pixels, if given number is lesser than 1 - ratio to original height
-In case if only width or height given - target image is resized to that dimension keeping aspect ratio.
-In case if both width and height are given - target image is resized to given dimensions without keeping the aspect ratio.
+  Images uploaded to local storage can be resized on get, using GET parameters passed to route in following format
+
+  w_:width - :width - positive number, target width in pixels, if given number is lesser than 1 - ratio to original width
+
+  h_:height - :height - positive number, target height in pixels, if given number is lesser than 1 - ratio to original height
+
+  In case if only width or height given - target image is resized to that dimension keeping aspect ratio.
+
+  In case if both width and height are given - target image is resized to given dimensions without keeping the aspect ratio.
 
 ## Testing
 

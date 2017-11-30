@@ -33,7 +33,8 @@
     "dev": "DEBUG=app* npm start",
     "lint": "eslint --ignore-path .gitignore ./",
     "coverage": "nyc npm run test && nyc report --reporter=text-summary",
-    "test": "ava -vs test/*.test.js test/test.js test/test-*.js test/**/*.js test/**/__tests__/**/*.js test/**/*.test.js"
+    "test": "ava -vs test/*.test.js test/contract/local-*.test.js",
+    "test_full": "ava -vs test/*.test.js test/test.js test/test-*.js test/**/*.js test/**/__tests__/**/*.js test/**/*.test.js"
   },
   "dependencies": {
     "aws-sdk": "2.156.0",

@@ -3,12 +3,9 @@ node_js:
   - "7"
 before_install:
   - sudo apt-get update
-  - mkdir -p /usr/src/app
   - sudo apt-get install sqlite3 libsqlite3-dev
   - sudo apt-get install imagemagick
   - npm install
-  - mkdir /usr/src/app/local
-  - cp ./local/db.schema /usr/src/app
-  - ./usr/bin/sqlite3 /usr/src/app/local/db.sqlt < /usr/src/app/db.schema
 
+script:
   - npm run test

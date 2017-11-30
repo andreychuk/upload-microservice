@@ -10,4 +10,5 @@ before_install:
   - mkdir /usr/src/app/local
   - cp ./local/db.schema /usr/src/app
   - ./usr/bin/sqlite3 /usr/src/app/local/db.sqlt < /usr/src/app/db.schema
+
   - npm run test

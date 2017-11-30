@@ -5,7 +5,6 @@ const logger = require('simple-express-logger');
 const compress = require('compression');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const jwtAuth = require('./jwt-auth');
 
 module.exports = function () {
   const app = this;
@@ -15,7 +14,6 @@ module.exports = function () {
     .use(cors())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
-    .use(jwtAuth)
     .use(correlation(true))
     .use(logger({
       customOutput: debug,

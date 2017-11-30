@@ -9,25 +9,27 @@ const fileUpload = require('express-fileupload');
 const filesToBody = require('../middleware/files-to-body');
 const fileDownload = require('../middleware/file-download');
 
+const jwtAuth = require('../middleware/before-request/jwt-auth');
+
 module.exports = function () {
   const app = this;
 
-  app.service('/', { find: serverStatus(packageJson) });
+  app.use('/', jwtAuth, { find: serverStatus(packageJson) });
 
   app.use(fileUpload());
   app.use(filesToBody);
 
-  app.service('/s3/upload', { create: upload.uploadS3 });
+  app.use('/s3/upload', jwtAuth, { create: upload.uploadS3 });
 
-  app.service('/s3/remove', { remove: removeFile.removeS3 });
+  app.use('/s3/remove', jwtAuth, { remove: removeFile.removeS3 });
 
-  app.service('/cloudinary/upload', { create: upload.uploadCloudinary });
+  app.use('/cloudinary/upload', jwtAuth, { create: upload.uploadCloudinary });
 
-  app.service('/cloudinary/remove', { remove: removeFile.removeCloudinary });
+  app.use('/cloudinary/remove', jwtAuth, { remove: removeFile.removeCloudinary });
 
-  app.service('/local/upload', { create: upload.uploadLocal });
+  app.use('/local/upload', jwtAuth, { create: upload.uploadLocal });
 
-  app.service('/local/remove', { remove: removeFile.removeLocal });
+  app.use('/local/remove', jwtAuth, { remove: removeFile.removeLocal });
 
   app.use('/local/get', { get: getFile.getLocal }, fileDownload);
 };

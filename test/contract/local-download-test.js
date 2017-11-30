@@ -31,8 +31,7 @@ test.beforeEach('upload file for testing', async (t) => {
 });
 
 test('test download file local', async (t) => {
-  const resp = await superTest.get('/local/get/' + t.context.uploaded.key)
-    .set('Authorization', t.context.token);
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key);
 
   t.is(resp.statusCode, 200);
   t.is(resp.type, 'image/jpeg');
@@ -40,8 +39,7 @@ test('test download file local', async (t) => {
 });
 
 test('test download file local + resize width', async (t) => {
-  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?w_200')
-    .set('Authorization', t.context.token);
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?w_200');
 
   t.is(resp.statusCode, 200);
 
@@ -55,8 +53,7 @@ test('test download file local + resize width', async (t) => {
 });
 
 test('test download file local + resize height', async (t) => {
-  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?h_250')
-    .set('Authorization', t.context.token);
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?h_250');
 
   t.is(resp.statusCode, 200);
   gm(resp.body).size((err, size) => {
@@ -68,8 +65,7 @@ test('test download file local + resize height', async (t) => {
 });
 
 test('test download file local + resize width and height', async (t) => {
-  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?w_250,h_250')
-    .set('Authorization', t.context.token);
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?w_250,h_250');
 
   t.is(resp.statusCode, 200);
   gm(resp.body).size((err, size) => {
@@ -82,8 +78,7 @@ test('test download file local + resize width and height', async (t) => {
 });
 
 test('test download file local + resize width non-valid arguments', async (t) => {
-  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?abracadabra')
-    .set('Authorization', t.context.token);
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?abracadabra');
 
   t.is(resp.statusCode, 200);
   // Should return original image

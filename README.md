@@ -84,6 +84,7 @@ Simply run `npm test` and all your tests in the `test/` directory will be run.
 ## TODO
 
  - [ ] Implement data validation
+ - [ ] Re-implement JWT Auth
 
 ## License
 

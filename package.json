@@ -61,6 +61,7 @@
     "http-errors": "1.6.2",
     "jsonwebtoken": "8.1.0",
     "lodash": "4.17.4",
+    "mmmagic": "0.4.6",
     "node-helpers": "1.1.8",
     "nyc": "10.3.2",
     "raven": "0.12.3",

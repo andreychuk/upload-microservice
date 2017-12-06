@@ -2,6 +2,7 @@
   "host": "localhost",
   "port": 3035,
   "JWTSecret": "JWT_SECRET",
+  "uploadMimes": "UPLOAD_MIME_TYPES",
   "aws": {
     "accessKeyId": "AWS_ACCESS_KEY_ID",
     "secretAccessKey": "AWS_SECRET_ACCESS_KEY",

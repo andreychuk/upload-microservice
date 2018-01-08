@@ -2,6 +2,7 @@ const uploadMimes = require('smart-config').get('uploadMimes');
 const mmm = require('mmmagic').Magic();
 
 module.exports = (filepath) => {
+  
   let magic = new mmm.Magic(mmm.MAGIC_MIME_TYPE);
 
   const mimesList = uploadMimes.split(" ");

@@ -5,7 +5,7 @@ services:
     image: upload-microservice:dev
     build:
       args:
-        npm_install_args: install
+        npm_install_args: install --verbose
     environment:
       - DEBUG=app*
       - JWT_SECRET=thatsmysecret

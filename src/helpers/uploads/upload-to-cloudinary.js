@@ -22,21 +22,20 @@ function upload(client, file) {
         return reject(httpError(500));
       }
 
-      validateUpload(file.data)
-        .catch((err) => {
-          return reject(httpError(400, err.Message));
-        }).then(() => {
-          client.uploader.upload(tempFilename, (error, result) => {
-            fs.unlink(tempFilename, (err) => {
-              return reject(httpError(500, err));
-            });
-            if (error) return reject(httpError(error.statusCode, error.message));
-            resolve({
-              key: result.public_id,
-              url: result.url
-            });
+      validateUpload(file).catch((err) => {
+        return reject(httpError(400, err.Message));
+      }).then(() => {
+        client.uploader.upload(tempFilename, (error, result) => {
+          fs.unlink(tempFilename, (err) => {
+            return reject(httpError(500, err));
+          });
+          if (error) return reject(httpError(error.statusCode, error.message));
+          resolve({
+            key: result.public_id,
+            url: result.url
           });
         });
+      });
     });
   });
 }

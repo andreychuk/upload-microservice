@@ -32,7 +32,7 @@ function upload(file) {
         return reject(httpError(500));
       }
 
-      validateUpload(tempFullname)
+      validateUpload(file)
         .catch((err) => {
           return reject(httpError(400, err.Message));
         }).then(() => {

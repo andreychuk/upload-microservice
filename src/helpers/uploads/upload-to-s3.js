@@ -16,7 +16,7 @@ module.exports = async ({
 function upload(client, file, bucket) {
   return new Promise((resolve, reject) => {
 
-    validateUpload(file.data).catch((err) => {
+    validateUpload(file).catch((err) => {
       return reject(httpError(400, err.Message));
     }).then(() => {
       client.upload({

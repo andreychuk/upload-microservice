@@ -1,22 +1,26 @@
 const uploadMimes = require('smart-config').get('uploadMimes');
-const mmm = require('mmmagic').Magic();
+const mmm = require('mmmagic');
 
 module.exports = (filepath) => {
-  
-  let magic = new mmm.Magic(mmm.MAGIC_MIME_TYPE);
+  return new Promise((resolve, reject) => {
+    let magic = new mmm.Magic(mmm.MAGIC_MIME_TYPE);
 
-  const mimesList = uploadMimes.split(" ");
-  return Promise((resolve, reject) => {
-    // No valid types defined - all mime-types considered valid
-    if (mimesList.length === 0) {
-      resolve(true);
-    }
+    const mimesList = uploadMimes.split(" ");
+
     magic.detectFile(filepath, (err, result) => {
-      if (err) { reject(err); }
-      if (result === "") {
-        reject(false);
+      if (uploadMimes === "" || uploadMimes === "UPLOAD_MIME_TYPES") {
+        resolve(true);
       }
-      resolve(mimesList.indexOf(result) !== -1);
+      if (err) {
+        return reject(err);
+      }
+      if (result === "") {
+        reject(new Error('Unable to detect MIME type'));
+      }
+      if (mimesList.indexOf(result) === -1) {
+        return reject(new Error('MIME type not allowed'));
+      }
+      return resolve(true);
     });
   });
 

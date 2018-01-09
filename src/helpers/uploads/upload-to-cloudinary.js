@@ -5,8 +5,11 @@ const httpError = require('http-errors');
 const config = require('smart-config').get('local');
 const uuidv4 = require('uuid/v4');
 const fs = require('fs');
+const validateUpload = require('../validate_upload');
 
-module.exports = async ({ input }) => {
+module.exports = async ({
+  input
+}) => {
   return uploadMany(client(), input);
 };
 
@@ -18,13 +21,22 @@ function upload(client, file) {
       if (err) {
         return reject(httpError(500));
       }
-      client.uploader.upload(tempFilename, (error, result) => {
-        fs.unlink(tempFilename, (err) => {
-          return reject(httpError(500, err));
+
+      validateUpload(file.data)
+        .catch((err) => {
+          return reject(httpError(400, err.Message));
+        }).then(() => {
+          client.uploader.upload(tempFilename, (error, result) => {
+            fs.unlink(tempFilename, (err) => {
+              return reject(httpError(500, err));
+            });
+            if (error) return reject(httpError(error.statusCode, error.message));
+            resolve({
+              key: result.public_id,
+              url: result.url
+            });
+          });
         });
-        if (error) return reject(httpError(error.statusCode, error.message));
-        resolve({ key: result.public_id, url: result.url });
-      });
     });
   });
 }

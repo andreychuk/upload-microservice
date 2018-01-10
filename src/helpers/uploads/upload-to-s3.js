@@ -23,7 +23,7 @@ function upload(client, file, bucket) {
         Bucket: bucket,
         Key: createUniqueFileName(file),
         Body: file.data,
-        ContentType: file.mimeType,
+        ContentType: file.mimetype,
         ContentDisposition: 'attachment; filename="' + file.name + '"' // save original file name for downloading
       }, (err, data) => {
         if (err) return reject(httpError(err.statusCode, err.message));

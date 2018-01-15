@@ -5,12 +5,6 @@ FROM node:9-alpine as base
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 RUN apk add --update-cache sqlite && \
-    apk add python && \
-    apk add make && \
-    apk add gcc && \
-    apk add g++ && \
-    apk add libc-dev && \
-    apk add linux-headers && \
     apk add imagemagick
 
 

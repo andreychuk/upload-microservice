@@ -8,7 +8,7 @@ module.exports = async (key) => {
 
 function removeFile(client, key) {
   return new Promise((resolve, reject) => {
-    client.destroy(key, (error, result) => {
+    client().uploader.destroy(key, (error, result) => {
       if (error) return reject(httpError(error.statusCode, error.message));
       resolve(result);
     });

@@ -1,6 +1,6 @@
 #
 #---- Base node ----
-FROM node:9-alpine as base
+FROM node:7-alpine as base
 # Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

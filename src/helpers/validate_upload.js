@@ -1,6 +1,10 @@
 const uploadMimes = require('smart-config').get('uploadMimes');
 
 module.exports = (file) => {
+  return fileValidate(file);
+};
+
+const fileValidate = (file) => {
   return new Promise((resolve, reject) => {
     const mimesList = uploadMimes.split(" ");
     if (uploadMimes === "" || uploadMimes === "UPLOAD_MIME_TYPES") {

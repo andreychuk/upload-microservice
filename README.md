@@ -1,6 +1,6 @@
 # upload-microservice
 
->
+> [![Build Status](https://travis-ci.org/andreychuk/upload-microservice.svg?branch=master)](https://travis-ci.org/andreychuk/upload-microservice)
 
 ## About
 

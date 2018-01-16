@@ -6,27 +6,32 @@ module.exports = (file) => {
 
 const fileValidate = (file) => {
   return new Promise((resolve, reject) => {
-    const mimesList = fileValidateMimes();
+    const mimesList = fileValidateGetMimes();
 
     if (mimesList === false) {
       return resolve(true);
     }
 
-    if (file.mimetype === "") {
-      return reject(new Error('Unable to detect MIME type'));
-    }
-
-    if (mimesList.indexOf(file.mimetype) === -1) {
-      return reject(new Error('MIME type not allowed'));
-    }
-
-    return resolve(true);
+    fileValidateCheckMimeType(file.mimeType, mimesList)
+      .catch((error) => { return reject(error); })
+      .done(() => { return resolve(true); });
   });
 };
 
-const fileValidateMimes = () => {
+const fileValidateGetMimes = () => {
   if (uploadMimes === "" || uploadMimes === "UPLOAD_MIME_TYPES") {
     return false;
   }
   return uploadMimes.split(" ");
+};
+
+const fileValidateCheckMimeType = async (mimetype, mimesList) => {
+  if (mimetype === "") {
+    throw new Error('Unable to detect MIME type');
+  }
+
+  if (mimesList.indexOf(mimetype) === -1) {
+    throw new Error('MIME type not allowed');
+  }
+  return true;
 };

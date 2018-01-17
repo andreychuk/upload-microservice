@@ -4,24 +4,36 @@ const uuid = require('uuid');
 const _ = require('lodash');
 const Promise = require('bluebird');
 const httpError = require('http-errors');
+const validateUpload = require('../validate_upload');
 
-module.exports = async ({ input }) => {
+module.exports = async ({
+  input
+}) => {
   return uploadMany(client(), input, config.bucketName);
 };
 
 
 function upload(client, file, bucket) {
   return new Promise((resolve, reject) => {
-    client.upload({
-      Bucket: bucket,
-      Key: createUniqueFileName(file),
-      Body: file.data,
-      ContentType: file.mimeType,
-      ContentDisposition: 'attachment; filename="' + file.name + '"' // save original file name for downloading
-    }, (err, data) => {
-      if (err) return reject(httpError(err.statusCode, err.message));
-      resolve({ key: data.key, url: data.Location });
+
+    validateUpload(file).catch((err) => {
+      return reject(httpError(400, err.Message));
+    }).then(() => {
+      client.upload({
+        Bucket: bucket,
+        Key: createUniqueFileName(file),
+        Body: file.data,
+        ContentType: file.mimetype,
+        ContentDisposition: 'attachment; filename="' + file.name + '"' // save original file name for downloading
+      }, (err, data) => {
+        if (err) return reject(httpError(err.statusCode, err.message));
+        resolve({
+          key: data.key,
+          url: data.Location
+        });
+      });
     });
+
   });
 }
 

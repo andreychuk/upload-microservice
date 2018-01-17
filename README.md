@@ -41,6 +41,10 @@ Getting up and running is as easy as 1, 2, 3.
 
     LOCAL_FILES_BASEURL - prefix to be used when returning uploaded file URL. Expected to end with "/"
 
+    UPLOAD_MIME_TYPES - list (space-separated) of mime-types that will be considered valid on upload. validation is skipped if list is empty. If variable not defined, no upload MIME-type validation performed.
+    example:
+    application/pdf application/msword image/jpeg image/png image/gif image/bmp image/webp image/jpg
+
     JWT_SECRET - Shared secret key to be used for JWT token auth.
 
 ## Routes

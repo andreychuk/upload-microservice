@@ -5,8 +5,11 @@ const httpError = require('http-errors');
 const LocalDb = require('../db/')();
 const uuidv4 = require('uuid/v4');
 const path = require('path');
+const validateUpload = require('../validate_upload');
 
-module.exports = async ({ input }) => {
+module.exports = async ({
+  input
+}) => {
   return uploadMany(input);
 };
 
@@ -29,12 +32,22 @@ function upload(file) {
         return reject(httpError(500));
       }
 
-      LocalDb.saveFile(tempFilename).then((filekey) => {
-        const fileurl = config.files_baseurl + 'local/get/' + filekey;
-        return resolve({ key: filekey, url: fileurl });
-      }).catch((err) => {
-        return reject(httpError(err.statusCode, err.Message));
-      });
+      validateUpload(file)
+        .catch((err) => {
+          return reject(httpError(400, err.Message));
+        }).then(() => {
+          LocalDb.saveFile(tempFilename)
+            .then((filekey) => {
+              const fileurl = config.files_baseurl + 'local/get/' + filekey;
+              return resolve({
+                key: filekey,
+                url: fileurl
+              });
+            }).catch((err) => {
+              return reject(httpError(err.statusCode, err.Message));
+            });
+
+        });
     });
   });
 }

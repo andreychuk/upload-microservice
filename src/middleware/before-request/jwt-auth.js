@@ -1,5 +1,5 @@
 const jwtSecret = require('smart-config').get('JWTSecret');
-const jwtDisable = require('smart-config').get('JWTDisable')
+const jwtDisable = require('smart-config').get('JWTDisable');
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {

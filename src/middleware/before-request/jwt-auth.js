@@ -6,11 +6,7 @@ module.exports = (req, res, next) => {
 
   if (jwtDisable !== "true") {
 
-    if (typeof req.headers.authorization !== "string") {
-      return res.status(400).send("Bad Request");
-    }
-
-    if (req.headers.authorization.indexOf('Bearer ') === -1) {
+    if ((typeof req.headers.authorization !== "string") || (req.headers.authorization.indexOf('Bearer ') === -1)) {
       return res.status(400).send("Bad Request");
     }
 

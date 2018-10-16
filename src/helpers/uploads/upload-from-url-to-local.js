@@ -15,7 +15,6 @@ module.exports = async ({input}) => {
 };
 
 function upload(url) {
-  console.log(url);
   return new Promise((resolve, reject) => {
       let fileType = "";
       const fileName = url.substring(url.lastIndexOf('/')+1).replace(/((\?|#).*)?$/,'');

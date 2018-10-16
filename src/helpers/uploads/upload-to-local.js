@@ -10,6 +10,7 @@ const validateUpload = require('../validate_upload');
 module.exports = async ({
   input
 }) => {
+  console.log(input);
   return uploadMany(input);
 };
 

@@ -15,6 +15,6 @@ module.exports = {
   },
 
   uploadFromUrlLocal: (body, params) => {
-      return upload.uploadFromUrlLocal(body, params);
+    return upload.uploadFromUrlLocal(body, params);
   }
 };

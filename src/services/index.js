@@ -29,6 +29,8 @@ module.exports = function () {
 
   app.use('/local/upload', jwtAuth, { create: upload.uploadLocal });
 
+  app.use('/local/upload-from-url', jwtAuth, { create: upload.uploadFromUrlLocal });
+
   app.use('/local/remove', jwtAuth, { remove: removeFile.removeLocal });
 
   app.use('/local/get', { get: getFile.getLocal }, fileDownload);

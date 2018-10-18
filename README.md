@@ -56,6 +56,7 @@ Getting up and running is as easy as 1, 2, 3.
     DELETE /cloudinary/remove/:key
 
     POST /local/upload
+    POST /local/upload-from-url
     DELETE /local/remove/:key
     GET /local/get/:key
 

@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
-module.exports = (params) => {
-  let strParamsValue = '';
+module.exports = (params, filename) => {
+  let strParamsValue = filename;
   Object.keys(params).forEach((index) => {
     strParamsValue += '' + index + params[index];
   });

@@ -3,6 +3,7 @@ const Promise = require('bluebird');
 const httpError = require('http-errors');
 const request = require('request');
 const fs = require('fs');
+const debug = require('debug')('app:upload-from-url-to-local');
 const LocalDb = require('../db/')();
 const uuidv4 = require('uuid/v4');
 const path = require('path');
@@ -21,7 +22,7 @@ function upload(url) {
     let req = request
       .get(url)
         .on('error', (err) => {
-          console.log(err);
+          debug(err);
           return reject(httpError(400, err.Message));
         })
         .on('response', (response) => {

@@ -18,7 +18,7 @@ module.exports = (filename, fullname, params) => {
       return resolve(results);
     }
 
-    const strHash = paramsHash(params);
+    const strHash = paramsHash(params, filename);
 
     db.getCached(strHash)
       .then((cached) => {

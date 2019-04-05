@@ -32,7 +32,7 @@ function upload(client, file) {
           if (error) return reject(httpError(error.statusCode, error.message));
           resolve({
             key: result.public_id,
-            url: result.url
+            url: result.secure_url
           });
         });
       });

@@ -20,8 +20,9 @@ function upload(client, file, bucket) {
       return reject(httpError(400, err.Message));
     }).then(() => {
       let contentDisposition = 'inline; filename="' + file.name + '"';
-      if((file.mimetype.toLowerCase()).includes('csv'))
+      if ((file.mimetype.toLowerCase()).includes('csv')) {
         contentDisposition = 'attachment; filename="' + file.name + '"'; // save original file name for downloading
+      }
       client.upload({
         Bucket: bucket,
         Key: createUniqueFileName(file),

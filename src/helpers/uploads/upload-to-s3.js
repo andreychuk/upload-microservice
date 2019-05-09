@@ -19,12 +19,15 @@ function upload(client, file, bucket) {
     validateUpload(file).catch((err) => {
       return reject(httpError(400, err.Message));
     }).then(() => {
+      let contentDisposition = 'inline; filename="' + file.name + '"';
+      if((file.mimetype.toLowerCase()).includes('csv'))
+        contentDisposition = 'attachment; filename="' + file.name + '"'; // save original file name for downloading
       client.upload({
         Bucket: bucket,
         Key: createUniqueFileName(file),
         Body: file.data,
         ContentType: file.mimetype,
-        ContentDisposition: 'attachment; filename="' + file.name + '"' // save original file name for downloading
+        ContentDisposition: contentDisposition
       }, (err, data) => {
         if (err) return reject(httpError(err.statusCode, err.message));
         resolve({

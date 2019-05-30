@@ -25,7 +25,7 @@ function upload(client, file) {
       validateUpload(file).catch((err) => {
         return reject(httpError(400, err.Message));
       }).then(() => {
-        client.uploader.upload(tempFilename, {notification_url: 'http://5cc9ca7c.ngrok.io/webhook/cloudinary'}, (error, result) => {
+        client.uploader.upload(tempFilename, {notification_url: 'http://5cc9ca7c.ngrok.io/webhook/cloudinary', public_id: 'flying-cat-try-1'}, (error, result) => {
           fs.unlink(tempFilename, (err) => {
             return reject(httpError(500, err));
           });

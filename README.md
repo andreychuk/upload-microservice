@@ -61,6 +61,11 @@ Getting up and running is as easy as 1, 2, 3.
     GET /local/get/:key
 
     GET /local/get/:key?w_:width,h_:height
+    
+    GET /local/get/:key?w_:width,h_:height,hc_:crop_height,wc_:crop_width,c_:crop_direction
+    GET /local/get/:key?hc_:crop_height,wc_:crop_width,c_:crop_direction
+    
+    
 
 ## Deployment
 Microservice is deployable as Docker image, following named volumes are defined:
@@ -71,15 +76,25 @@ Microservice is deployable as Docker image, following named volumes are defined:
   Microservice uses JWT-based token authentication (https://jwt.io). Token must be configured using JWT_SECRET environment variable. Tokens should be passed with 'Authorization' request header, using the Bearer schema (https://tools.ietf.org/html/rfc6750)
 
 ## Local image storage and getting resized images
-  Images uploaded to local storage can be resized on get, using GET parameters passed to route in following format
+  Images uploaded to local storage can be resized or(and) cropped on get, using GET parameters passed to route in following format
 
   w_:width - :width - positive number, target width in pixels, if given number is lesser than 1 - ratio to original width
 
   h_:height - :height - positive number, target height in pixels, if given number is lesser than 1 - ratio to original height
-
+ 
+  hc_:crop_height - :crop_height - positive number, target width in pixels, if given number is lesser than 1 - ratio to original width
+  
+  wc_:crop_width - :crop_width - positive number, target width in pixels, if given number is lesser than 1 - ratio to original width
+  
+  c_:crop_direction - :crop_direction - one of the given string: NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast
+  
   In case if only width or height given - target image is resized to that dimension keeping aspect ratio.
 
   In case if both width and height are given - target image is resized to given dimensions without keeping the aspect ratio.
+  
+  In case if crop_width, crop_height and crop_direction given - target image is croped to given dimensions.
+  
+  You can also mix height, width, crop_height, crop_width and crop_direction params for cropping and resizing at once.
 
 ## Testing
 

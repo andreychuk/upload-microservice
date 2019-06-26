@@ -85,3 +85,29 @@ test('test download file local + resize width non-valid arguments', async (t) =>
   t.is(resp.type, 'image/jpeg');
   t.is(resp.headers['content-length'], String(t.context.uploaded_filesize));
 });
+
+test('test download file local + crop height and width', async (t) => {
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?hc_250,wc_250,c_Center');
+
+  t.is(resp.statusCode, 200);
+  gm(resp.body).size((err, size) => {
+    if (err) {
+      t.fail(err);
+    }
+    t.is(size.height, 250);
+    t.is(size.width, 250);
+  });
+});
+
+test('test download file local + crop height and width width non-valid arguments', async (t) => {
+  const resp = await superTest.get('/local/get/' + t.context.uploaded.key + '?hc_250,wc_250,c_TopLeft');
+
+  t.is(resp.statusCode, 200);
+  gm(resp.body).size((err, size) => {
+    if (err) {
+      t.fail(err);
+    }
+    t.is(size.height, 250);
+    t.is(size.width, 250);
+  });
+});

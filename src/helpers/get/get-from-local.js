@@ -5,6 +5,7 @@ const httpError = require('http-errors');
 const LocalDb = require('../db/')();
 const path = require('path');
 const resize = require('../resize');
+const crop = require('../crop');
 
 
 module.exports = async (key, params) => {
@@ -26,13 +27,36 @@ function getFile(key, params) {
         let resizeParams = resize.paramsParse(params.query);
         resizeParams = resize.paramsValidate(resizeParams);
 
-        resize.process(filename, fullname, resizeParams)
-          .then((data) => {
-            return resolve(data);
-          })
-          .catch((err) => {
-            return reject(err);
-          });
+        let cropParams = crop.cropParamsParse(params.query);
+        cropParams = crop.cropParamsValidate(cropParams);
+
+        if (cropParams.crop) {
+
+          crop.cropProcess(filename, fullname, cropParams)
+            .then((data) => {
+
+              resize.process(data.filePath.split('/')[2], data.filePath, resizeParams)
+                .then((data) => {
+                  return resolve(data);
+                })
+                .catch((err) => {
+                  return reject(err);
+                });
+            })
+            .catch((err) => {
+              return reject(err);
+            });
+
+        } else {
+          resize.process(filename, fullname, resizeParams)
+            .then((data) => {
+              return resolve(data);
+            })
+            .catch((err) => {
+              return reject(err);
+            });
+        }
+
       });
     }).catch((err) => {
       return reject(httpError(err.statusCode, err.message));

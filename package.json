@@ -57,7 +57,7 @@
     "gm": "1.23.1",
     "http-errors": "1.6.2",
     "jsonwebtoken": "8.1.0",
-    "lodash": "4.17.4",
+    "lodash": "4.17.19",
     "node-helpers": "1.1.8",
     "raven": "0.12.3",
     "request": "^2.81.0",
